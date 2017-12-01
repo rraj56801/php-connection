@@ -12,20 +12,26 @@ $response["message"] = "No products found";
 
 // include db connect class
 require_once __DIR__ . '/db_connect.php';
+   require_once __DIR__ . '/db_config.php';
+
 
 // connecting to db
-$db = new DB_CONNECT();
+//$db = new DB_CONNECT();
+
+     $con = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD) or die(mysqli_error($con));
+      $db = mysqli_select_db($con,DB_DATABASE) or die(mysqli_error($con)) or die(mysqli_error($con));
+
 
 // get all products from products table
-$result = mysqli_query($response,"SELECT *FROM products") or die(mysqli_error());
+$result = mysqli_query($con,"SELECT * FROM products") or die(mysqli_error($con));
 
 // check for empty result
-if (mysql_num_rows($result) > 0) {
+if (mysqli_num_rows($result) > 0) {
     // looping through all results
     // products node
     $response["products"] = array();
     
-    while ($row = mysql_fetch_array($result)) {
+    while ($row = mysqli_fetch_array($result)) {
         // temp user array
         $product = array();
         $product["pid"] = $row["pid"];
