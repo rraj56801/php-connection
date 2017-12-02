@@ -58,14 +58,15 @@ public class JSONParser {
 				HttpEntity httpEntity = httpResponse.getEntity();
 				is = httpEntity.getContent();
 
-			}else if(method == "GET"){
+			}
+			else if(method == "GET"){
 				// request method is GET
 				try{
 					DefaultHttpClient httpClient = new DefaultHttpClient();
 					String paramString = URLEncodedUtils.format(params, "utf-8");
 					url += "?" + paramString;
 
-					Log.v("URL IN GET", url);
+					// Log.v("URL IN GET", url);
 
 					HttpGet httpGet = new HttpGet(url);
 					HttpResponse httpResponse = httpClient.execute(httpGet);

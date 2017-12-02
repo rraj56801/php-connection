@@ -14,7 +14,7 @@
         android:textSize="17dip"/>
     
     <!-- Input Name -->
-	<EditText android:id="@+id/inputName"
+	<EditText android:id="@+id/inputNamer"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
 	    android:layout_margin="5dip"

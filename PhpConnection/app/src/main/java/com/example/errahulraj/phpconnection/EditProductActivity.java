@@ -37,17 +37,17 @@ public class EditProductActivity extends Activity {
 	JSONParser jsonParser = new JSONParser();
 
 	// single product url
-	private static final String url_product_detials = "http://127.0.0.1/android_connect/get_product_details.php";
+	private static final String url_product_detials = "http://172.20.10.3/android_connect/get_product_details.php";
 
 	// url to update product
-	private static final String url_update_product = "http://127.0.0.1/android_connect/update_product.php";
+	private static final String url_update_product = "http://172.20.10.3/android_connect/update_product.php";
 	
 	// url to delete product
-	private static final String url_delete_product = "http://127.0.0.1/android_connect/delete_product.php";
+	private static final String url_delete_product = "http://172.20.10.3/android_connect/delete_product.php";
 
 	// JSON Node names
 	private static final String TAG_SUCCESS = "success";
-	private static final String TAG_PRODUCT = "product";
+	private static final String TAG_PRODUCT = "products";
 	private static final String TAG_PID = "pid";
 	private static final String TAG_NAME = "name";
 	private static final String TAG_PRICE = "price";
@@ -146,7 +146,7 @@ public class EditProductActivity extends Activity {
 
 							// product with this pid found
 							// Edit Text
-							txtName = (EditText) findViewById(R.id.inputName);
+							txtName = (EditText) findViewById(R.id.inputNamer);
 							txtPrice = (EditText) findViewById(R.id.inputPrice);
 							txtDesc = (EditText) findViewById(R.id.inputDesc);
 
@@ -201,7 +201,9 @@ public class EditProductActivity extends Activity {
 		protected String doInBackground(String... args) {
 
 			// getting updated data from EditTexts
-			String name = txtName.getText().toString();
+			String name ="tahir";
+			name=txtName.getText().toString();
+			Log.v("doInBack Name", "IGGIG");
 			String price = txtPrice.getText().toString();
 			String description = txtDesc.getText().toString();
 
@@ -218,20 +220,22 @@ public class EditProductActivity extends Activity {
 					"POST", params);
 
 			// check json success tag
-			try {
-				int success = json.getInt(TAG_SUCCESS);
-				
-				if (success == 1) {
-					// successfully updated
-					Intent i = getIntent();
-					// send result code 100 to notify about product update
-					setResult(100, i);
-					finish();
-				} else {
-					// failed to update product
-				}
-			} catch (JSONException e) {
-				e.printStackTrace();
+			if (json != null) {
+				try {
+					int success = json.getInt(TAG_SUCCESS);
+
+					if (success == 1) {
+						// successfully updated
+						Intent i = getIntent();
+						// send result code 100 to notify about product update
+						setResult(100, i);
+						finish();
+					} else {
+						// failed to update product
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+						}
 			}
 
 			return null;
@@ -272,6 +276,7 @@ public class EditProductActivity extends Activity {
 
 			// Check for success tag
 			int success;
+
 			try {
 				// Building Parameters
 				List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -282,9 +287,10 @@ public class EditProductActivity extends Activity {
 						url_delete_product, "POST", params);
 
 				// check your log for json response
-				Log.d("Delete Product", json.toString());
-				
+				Log.v("Delete Product", json.toString());
+
 				// json success tag
+
 				success = json.getInt(TAG_SUCCESS);
 				if (success == 1) {
 					// product successfully deleted

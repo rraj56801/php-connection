@@ -1,24 +1,21 @@
 package com.example.errahulraj.phpconnection;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.HTTP;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NewProductActivity extends Activity {
 
@@ -26,12 +23,12 @@ public class NewProductActivity extends Activity {
 	private ProgressDialog pDialog;
 
 	JSONParser jsonParser = new JSONParser();
-	EditText inputName;
-	EditText inputPrice;
-	EditText inputDesc;
+	EditText inputName_text;
+	EditText inputPrice_text;
+	EditText inputDesc_text;
 
 	// url to create new product
-	private static String url_create_product = "http://127.0.0.1/android_connect/create_product.php";
+	private static String url_create_product = "http://172.20.10.3/android_connect/create_product.php";
 
 	// JSON Node names
 	private static final String TAG_SUCCESS = "success";
@@ -42,9 +39,9 @@ public class NewProductActivity extends Activity {
 		setContentView(R.layout.add_product);
 
 		// Edit Text
-		inputName = (EditText) findViewById(R.id.inputName);
-		inputPrice = (EditText) findViewById(R.id.inputPrice);
-		inputDesc = (EditText) findViewById(R.id.inputDesc);
+		inputName_text = (EditText) findViewById(R.id.inputName);
+		inputPrice_text = (EditText) findViewById(R.id.inputPrice);
+		inputDesc_text = (EditText) findViewById(R.id.inputDesc);
 
 		// Create button
 		Button btnCreateProduct = (Button) findViewById(R.id.btnCreateProduct);
@@ -82,9 +79,9 @@ public class NewProductActivity extends Activity {
 		 * Creating product
 		 * */
 		protected String doInBackground(String... args) {
-			String name = inputName.getText().toString();
-			String price = inputPrice.getText().toString();
-			String description = inputDesc.getText().toString();
+			String name = inputName_text.getText().toString();
+			String price = inputPrice_text.getText().toString();
+			String description = inputDesc_text.getText().toString();
 
 			// Building Parameters
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -100,7 +97,8 @@ public class NewProductActivity extends Activity {
 		// 	Log.d("Create Response", json.toString());
 
 			// check for success tag
-			try {
+		if(json != null)
+				try {
 				int success = json.getInt(TAG_SUCCESS);
 
 				if (success == 1) {
