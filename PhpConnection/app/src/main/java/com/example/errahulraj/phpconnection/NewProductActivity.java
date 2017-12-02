@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -94,9 +96,8 @@ public class NewProductActivity extends Activity {
 			// Note that create product url accepts POST method
 			JSONObject json = jsonParser.makeHttpRequest(url_create_product,
 					"POST", params);
-
-			// check log cat fro response
-//			Log.d("Create Response", json.toString());
+				// check log cat fro response
+		// 	Log.d("Create Response", json.toString());
 
 			// check for success tag
 			try {

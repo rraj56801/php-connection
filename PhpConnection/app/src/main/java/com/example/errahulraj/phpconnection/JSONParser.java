@@ -41,7 +41,7 @@ public class JSONParser {
 
 		// Making HTTP request
 		try {
-			
+
 			// check for request method
 			if(method == "POST"){
 				// request method is POST
@@ -52,39 +52,29 @@ public class JSONParser {
 				if (params!=null)
 					httpPost.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
 
-//				httpPost.setEntity(new UrlEncodedFormEntity(params));
+			httpPost.setEntity(new UrlEncodedFormEntity(params));
 
 				HttpResponse httpResponse = httpClient.execute(httpPost);
 				HttpEntity httpEntity = httpResponse.getEntity();
 				is = httpEntity.getContent();
-				
+
 			}else if(method == "GET"){
 				// request method is GET
-
-				DefaultHttpClient   httpclient = new DefaultHttpClient(new BasicHttpParams());
-				//DefaultHttpClient defaultClient = new DefaultHttpClient();
-				// Setup the get request
-
-				HttpGet httpGetRequest = new HttpGet("http://10.0.2.2:8080");
 				try{
-					// Execute the request in the client
-					HttpResponse httpResponse = httpclient.execute(httpGetRequest);
-					// Grab the response
-					BufferedReader reader = new BufferedReader(new InputStreamReader(httpResponse.getEntity().getContent(), "UTF-8"));
-					json = reader.readLine();
+					DefaultHttpClient httpClient = new DefaultHttpClient();
+					String paramString = URLEncodedUtils.format(params, "utf-8");
+					url += "?" + paramString;
+
+					Log.v("URL IN GET", url);
+
+					HttpGet httpGet = new HttpGet(url);
+					HttpResponse httpResponse = httpClient.execute(httpGet);
+					HttpEntity httpEntity = httpResponse.getEntity();
+					is = httpEntity.getContent();
 				}catch(Exception e){
 					Log.d("Error",e.toString());
 				}
-
-		/*		DefaultHttpClient httpClient = new DefaultHttpClient();
-				String paramString = URLEncodedUtils.format(params, "HTTP.UTF_8");
-				url += "?" + paramString;
-				HttpGet httpGet = new HttpGet(url);
-
-				HttpResponse httpResponse = httpClient.execute(httpGet);
-				HttpEntity httpEntity = httpResponse.getEntity();
-				is = httpEntity.getContent();
-		*/	}
+			}
 
 
 		} catch (UnsupportedEncodingException e) {
